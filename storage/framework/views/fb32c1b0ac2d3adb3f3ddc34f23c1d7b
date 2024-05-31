@@ -1,0 +1,15 @@
+<?php $__env->startSection('content'); ?>
+
+    RESTOCK:
+
+    Für jedes Objekt das vom Kunden zurückkommen sollte
+
+    Check Zurückgekommen? Ja/Nein
+    Check functionality Ja, Mangel, Defekt
+
+    Check jedes accessory Ja/Nein
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

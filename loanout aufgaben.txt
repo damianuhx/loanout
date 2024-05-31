@@ -1,0 +1,105 @@
+
+
+
+1. Zielbestimmung
+
+Die Software soll den Ausleihprozess an Händler und Retailer. Es sollen Abläufe klar strukturiert sein mit klar zugeordneten Kompetenzen und Pflichten. Die Verfügbarkeit, Vollständigkeit und Funktionstüchtigkeit der Produkte soll sichergestellt werden. Produkte, Zubehör, Benutzer, verschiedene Lager und Bezugsquellen sollen über ein CMS definiert werden können.
+
+
+
+2. Produkteinsatz
+
+Die Software dient zum einen den Mitarbeitern um die Verfügbarkeit der Produkte einzusehen und die Ausleihe direkt mittels Knopfdruck zu beantragen.
+
+Supervisor sollen Geräte sperren und reservieren können, sowie Ausleihen bewilligen oder ablehnen. Ein Supervisor soll stets den Überblick über die für ihn wichtigen Geräte haben und sicherstellen können, dass für spezielle Events die richtigen Geräte verfügbar sind.
+
+Der Lagerverwalter soll automatische Meldungen erhalten welche Produkte er wie aushändigen oder versenden soll. Bei der Rücknahme der Produkte soll eine Funktions- und  Vollständigkeitskontrolle durchgeführt werden. Zusätzlich werden defekte und unvollständige Geräte als solche aufgelistet, damit diese reinventarisiert werden können.
+
+
+
+3. Produktfunktionen
+
+Produkte-Browser zur Auswahl des passenden Objektes gegliedert nach der Abteilung, Kategorie und Produkt. Inkl. Darstellung der Verfügbarkeit der Produkte mittels farbigem Punkt und voraussichtlichem Verfügbarkeitsdatum. Verfügbare Produkte können zum Warenkorb hinzugefügt werden.
+
+Ausleihe beantragen: Beantragen der Ausleihe der sich im Warenkorb befindenden Produkte mittels Knopfdruck. Welcher Kunde soll wann welche Produkte auf welchem Versandweg erhalten.
+
+Anfragen auflisten:  Ausleihanfragen werden in einer sortierbaren und filterbaren Liste dargestellt.
+
+Ausleihe bewilligen: Auflistung aller Anfragen. Bestätigung oder Ablehnung einer Anfrage durch den Supervisor mittels Knopfdruck. Der Supervisor kann Geräte und Rückgabedatum nachträglich ändern. Supervisor müssen ihre  eigenen Ausleihen nicht bewilligen lassen.
+
+Objekte reservieren: Objekte können vom Supervisor reserviert resp. gesperrt werden.  Sie sind dann für andere Benutzer nicht verfügbar, solange sie nicht wieder vom selben Supervisor entsperrt werden.
+
+Auszuhändigende Objekte auflisten:  Auszuhändigende Objekte werden in einer sortierbaren und filterbaren Liste dargestellt.
+
+Objekte aushändigen: Der Lagerverwalter sieht eine Liste mit Ausleihen, d.h. welche Objekte (inkl. Lager-Standort) er an welche Adresse verschicken resp. aushändigen soll.  Er bestätigt mittels Knopfdruck, dass er die Ware ausgehändigt resp. verschickt hat.
+
+Lieferschein generieren: Es wird ein druckbarer Lieferschein mit allen ausgeliehenen Produkten generiert. Zusätzlich wird der Wert der Ausleihe berechnet sowie der Empfänger über die  Rahmenbedingungen der Ausleihe informiert.
+
+Ausgeliehene Objekte auflisten:  Ausgeliehene Objekte werden in einer nach Ausleihen zusammengefassten Liste dargestellt. Die Liste kann sortiert und nach diversen Kriterien gefiltert werden. 
+
+Objekte zurücknehmen: Die ausgeliehenen Objekte werden aufgelistet. Bei der Rücknahme soll die Vollständigkeit und die Funktionstüchtigkeit aller Geräte sichergestellt werden.
+
+CMS: Alle Daten können in einem CMS geändert werden. Neue Einträge können hinzugefügt und überflüssige gelöscht werden. Den verschiedenen Modellen können Zubehörsets zugeordnet werden, wodurch definiert wird welches Zubehör erforderlich ist, damit ein Objekt als vollständig bezeichnet werden darf. Verfügt ein Objekt über alles Zubehör das für das entsprechende Modell erforderlich sein soll, so gilt es als vollständig. Bei der Rücknahme soll wenn immer möglich diese Vollständigkeit  sichergestellt werden.
+
+Benutzer Funktionalität: Benutzer können sich registrieren, an- und abmelden, sowie ihr Passwort zurücksetzen. Benutzerrechte werden vom Supervisor über das CMS verteilt. Je nach Sprache des Benutzers wird die Seite auf deutsch, englisch oder französisch dargestellt.
+
+
+
+4. Produktdaten
+
+Folgende Daten-Objekte werden modellliert:
+
+Abteilung = "division"
+Kategorie = "category"
+Modell = "type"
+Objekt = "object"
+Zubehör = "accessory"
+Zubehörset = "accessoryset"
+Lagerraum = "location"
+Bezugsquelle = "source"
+Ausleihe (wird erstellt sobald jemand eine Ausleihe beantragt) = "lent"
+Benutzer (mit verschiedenen Rechten) = "user"
+Kunden (Reseller für vereinfachte Adresseingabe sowie einmalige Kundenadressen) = "customers"
+Status (e.g. ausgeliehen, verfügbar, defekt) = "state" 
+
+Dabei sind sämtliche Einträge mehrsprachig (deutsch, französisch, englisch).
+
+Die Beziehungen der Daten-Objekte stehen wie folgt zueinander in Beziehung:
+
+
+
+
+
+
+5. Testszenarien
+
+9.01 Produkte-Browser
+Für jede Abteilung werden die nach Kategorie gegliederten Produkte nach deren Verfügbarkeit aufgelistet.  Produkte mit mindestens einem verfügbaren Objekt werden mit einem grünen (sofern das gesamte Zubehör vorhanden ist) oder einem orangen (wenn ein Zubehör fehlt) angezeigt. Ist kein funktionstüchtiges Objekt dieses Produktes verfügbar wird es rot angezeigt. Die einzelnen Objekte dieses Produkts werden ebenfalls mit dem entsprechenden farbigen Punkten dargestellt.
+
+Ein klick auf ein Objekt Zeigt den detaillierten Status des Objektes an. Ist es verfügbar und funktionstüchtig kann es in den Warenkorb hinzugefügt werden.
+
+
+9.02 Ausleihe beantragen: Unter "Warenkorb" kann die Ausleihe der in den Warenkorb gelegten Produkte mittels Formular beantragt werden. Die Produkte können dort direkt wieder entfernt, resp. weitere hinzugefügt werden. Durch das Drop-Down Menu kann eine vorher eingegebenen Adressen eines Resellers ausgewählt werden oder eine neue Adresse eingeben werden. Das gewünschte Rückgabedatum kann mittels Minikalender ausgewählt werden. Dabei wird sichergestellt, dass das Rückgabedatum nicht in der Vergangenheit liegt.  Zusätzlich kann ein Kommentar eingegeben und ausgewählt werden ob die Ware direkt an den Kunden verschickt werden soll, oder ob die Ware abgeholt wird. Zusätzlich kann angegeben werden, ob das Objekt erst zu einem späteren Zeitpunkt versendet werden soll.
+
+Wird die Ausleihe durch einen normalen Nutzer beantragt, wird sie zu einer Anfrage, die dem Supervisor zur Bewilligung vorgelegt wird. Erfolgt die Ausleihe durch einen Supervisor wird sie direkt dem Lagerverwalter weitergeleitet, damit dieser die Produkte versenden resp. aushändigen kann. Wird die Ausleihe von einem Lagerverwalter beantragt, so wird diese direkt als verschickt markiert, damit in dieser Zeit das Produkt repariert oder reinventarisiert werden kann.  Die erfolgreiche Beantragung wird durch eine detaillierte Auflistung der Parameter bestätigt. 
+
+9.03 Anfragen managen: Alle Anfragen werden in einer nach Versand- oder Rückgabedatum, Empfänger oder Antragssteller sortierbaren Liste dargestellt. Die Liste kann nach enthaltenem Gerätetyp, Antragssteller oder Empfänger gefiltert werden.
+
+
+9.04 Ausleihe bewilligen: Supervisor können Anfragen bewilligen, dass die  beantragte Ausleihe zu einer Versandaufforderung wird. Der Supervisor kann die Ausleihe ablehnen, dann werden die Objekte wieder freigegeben, so dass sie von anderen Nutzern ausgeliehen werden können. Der Supervisor kann zudem Objekte aus der Ausleihe entfernen oder das Rückgabedatum ändern.
+
+9.05 Objekte reservieren: Der Supervisor hat in der Objektdetailansicht zusätzlich die Option ein Objekt zu sperren.  Gesperrte Objekte können nur von dem Supervisor ausgeliehen werden, der sie gesperrt hat, bis sie durch diesen Supervisor wieder entsperrt werden. Selbst gesperrte Objekte werden unter Objektauswahl>Gesperrt aufgelistet.
+
+9.06 Liste der zu versendenden Objekte: Die zum Versand bewilligten Anfragen werden in einer nach Versand- oder Rückgabedatum, Empfänger oder Antragssteller sortierbaren Liste dargestellt.  Die Liste kann nach enthaltenem Gerätetyp, Antragssteller oder Empfänger gefiltert werden.
+
+9.07 Objekte aushändigen: Unter Ausleihe>Aushändigen werden die bewilligten Ausleihen aufgelistet. Der Lagerverwalter sieht alle Informationen um die Ware aushändigen zu können. Durch einen Klick auf "aushändigen" wird bestätigt, dass die Ware ausgehändigt worden ist. 
+
+9.08 Lieferschein generieren: Für jede Ausleihe wird automatisch ein druckbarer Lieferschein generiert, der jederzeit aufrufbar ist. Im Lieferschein wird der Kunde über die enthaltenen Produkte, den Wert der Ausleihe, das gewünschte Rücksendedatum und die Konsequenzen einer verspäteten Rückgabe informiert.
+
+9.09 Objekte zurücknehmen: Verschickte Anfragen werden in einer nach Versand- oder Rückgabedatum, Empfänger oder Antragssteller sortierbaren Liste dargestellt.  Die Liste kann nach enthaltenem Gerätetyp, Antragssteller oder Empfänger gefiltert werden.
+
+9.10 Objekte zurücknehmen: Zurückerhaltene Geräte können einem frei wählbaren vordefinierten Lagerplatz zugeordnet werden. Für jedes Gerät kann bestätigt werden dass es immer noch funktionstüchtig ist. Zusätzlich kann für jedes Zubehör, das vorhanden sein muss oder vorher vorhanden war, bestätigt werden, dass dieses vorhanden ist. Vollständige und unvollständige funktionstüchtige Geräte werden im Produkte-Browser mit einem grünen resp. orangen Punkt dargestellt und sind wieder ausleihbar. Nicht funktionstüchtige Geräte werden mit einem roten Punkt dargestellt und sind nur durch den Lagerverwalter für eine reinventarisierung ausleihbar.
+
+9.11 CMS: Die Daten können in einem einfach CMS bearbeitet werden. Alle Produktdaten können beliebig erstellt, geändert und gelöscht werden. Dabei wird stets sichergestellt dass keine essentiellen Einträge gelöscht werden können. Die Eingabe erfolgt je nach Art des Eintrages über passende Textfelder oder Drop-Down Menus .
+
+9.12 Benutzer: Benutzer können sich registrieren. Dabei wird das Passwort so kodiert in der Datenbank gespeichert, dass für niemanden das Passwort lesbar ist. Wurde dem Nutzer über das CMS die entsprechenden Rechte erteilt. kann sich der Nutzer erfolgreich einloggen. Je nach Berechtigung/Funktion, die ihm erteilt wurde, sind andere Funktionen verfügbar, resp. Daten änderbar. Die Seite erscheint in der für den Nutzer eingestellten Sprache. 

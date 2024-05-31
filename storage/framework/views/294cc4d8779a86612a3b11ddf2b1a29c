@@ -1,0 +1,32 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main">
+
+    <?php echo Form::open(['url'=>'lent/all', 'method'=>'get']); ?>
+
+
+    <?php foreach(['user'=>$user, 'customer'=>$customer, 'state'=>$state] as $key=>$array): ?>
+        <?php echo Form::label($key); ?>
+
+        <?php echo Form::select($key, $array); ?>
+
+        <br/>
+    <?php endforeach; ?>
+
+    <?php foreach(['updated', 'reserved', 'granted', 'handed', 'returned', 'return'] as $field): ?>
+        <?php echo Form::label($field.'_at'); ?>
+
+        <?php echo Form::select($field.'_sign', ['none'=>'egal', 'before'=>'kleiner als', 'equal'=>'gleich', 'after'=>'grösser als']); ?>
+
+        <input type="text" value="" name="<?php echo e($field.'_at'); ?>" id="datepicker"> <br/>
+        <br/>
+    <?php endforeach; ?>
+
+    <?php echo Form::submit('search'); ?>
+
+    <?php echo Form::close(); ?>
+
+
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

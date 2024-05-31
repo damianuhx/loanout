@@ -1,0 +1,88 @@
+<?php $__env->startSection('content'); ?>
+
+    <div id="browser">
+
+
+
+        <div id="kategorien" class="panel pleft">
+            <h2>Kategorien</h2>
+            <ul>
+                <?php foreach($categories as $entry): ?>
+                    <li>
+                    <a href="<?php echo e(env('HREF_MAIN').'types/'.$entry['id']); ?>"
+                       <?php if(isset($category) && $category['id']==$entry['id']): ?>
+                            class="current"
+                       <?php endif; ?>
+                    ><?php echo e($entry['name']); ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+
+
+        <div id="modelle" class="panel pcenter">
+            <h2>Modelle</h2>
+            <ul>
+                <?php foreach($types as $entry): ?>
+                    <li>
+                        <a href="<?php echo e(env('HREF_MAIN').'objects/'.$entry['id']); ?>"
+                        <?php if(isset($type) && $type['id']==$entry['id']): ?>
+                           class="current"
+                                <?php endif; ?>
+                                ><?php echo e($entry['name']); ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+
+
+        <div id="sn" class="panel pright">
+            <h2>Objekte (Anzahl)</h2>
+            <ul>
+                <?php foreach($objects as $entry): ?>
+                    <li><div class="status <?php echo e($entry['color']); ?>"></div> <?php echo HTML::link( env('HREF_MAIN').'details/'.$entry['id'], $entry['name'], array('data-fancybox-type' => 'iframe', 'class' => 'fancybox')); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+
+
+        <div id="overlay">
+            <?php if(isset($object)): ?>
+
+                <div class="details">
+                    Name: <?php echo e($object['name']); ?> <br/>
+
+                    Accessories:<br/>
+                    <?php foreach($object['accessories'] as $accessory): ?>
+                        <?php echo e($accessory['name']); ?><br/>
+                    <?php endforeach; ?>
+
+                    Working: <?php echo e($object['working']); ?> <br/>
+                </div>
+
+                <?php echo Form::open(array('url' => env('HREF_MAIN').'reserve/'.$object['id'], 'method' => 'get')); ?>
+
+                <?php echo Form::submit('Add to Basket'); ?>
+
+                <?php echo Form::close(); ?>
+
+            <?php endif; ?>
+
+        </div>
+
+
+        <div class="clear"></div>
+
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+
+
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

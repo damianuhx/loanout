@@ -1,0 +1,34 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="meta">
+
+<h1>Admin</h1>
+
+</div>
+
+<div id="main">
+
+    <?php foreach($types as $type): ?>
+        <?php echo Form::label($type['name']); ?>
+
+
+        Wie viele Objekte müssen im Minimum noch vorhanden sein.
+        <?php echo Form::text($type['id'], ''); ?>
+
+
+        Wie lange dürfen die Objekte maximal ausgeliehen werden.
+        <?php echo Form::text($type['id'], ''); ?>
+
+    <?php endforeach; ?>
+
+<br /><br />
+
+    <?php echo Form::submit('set'); ?>
+
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

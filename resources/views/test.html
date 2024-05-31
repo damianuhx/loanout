@@ -1,0 +1,36 @@
+
+
+<script>
+    $(function(){
+
+        // jQuery UI Dialog
+
+        $('#jq-dialog').dialog({
+            autoOpen: false,
+            width: 400,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Submit Form": function() {
+                    document.testconfirmJQ.submit();
+                },
+                "Cancel": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('form#testconfirmJQ').submit(function(e){
+            e.preventDefault();
+            $("span#dialog-email strong").html($("input#emailJQ").val());
+            $('#jq-dialog').dialog('open');
+        });
+    });
+</script>
+
+
+<form id="testconfirmJS" name="testconfirmJS" action="test.php" method="post">
+
+            <input class="btn btn-primary" id="submitJS" name="submitJS" type="submit" value="Submit" onClick="return confirm('sure?')" />
+
+</form>

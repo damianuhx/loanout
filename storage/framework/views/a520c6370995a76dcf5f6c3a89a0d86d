@@ -1,0 +1,32 @@
+<?php $__env->startSection('content'); ?>
+
+    Please Hand out the following Objects: || Please send the following Objects:<br/>
+
+    <?php foreach($lent['objects'] as $object): ?>
+        <?php echo e($object['name']); ?> <br/>
+    <?php endforeach; ?>
+
+    <br/><br/>
+
+    To the following user: || To the following address
+
+        <?php echo e($lent['user']['name']); ?>
+
+    <?php $a=$lent['customer'];?>
+
+    <br/>
+    <?php echo e($a['first_name']); ?> <?php echo e($a['last_name']); ?> <br/>
+    <?php echo e($a['street']); ?> <?php echo e($a['number']); ?> <br/>
+    <?php echo e($a['zip']); ?> <?php echo e($a['city']); ?>
+
+
+    <?php echo Form::open(['url'=>'handout/'.$lent['id']]); ?>
+
+    <?php echo Form::submit('handed out'); ?>
+
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

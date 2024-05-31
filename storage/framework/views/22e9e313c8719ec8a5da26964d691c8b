@@ -1,0 +1,56 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php
+    $t=config('app.translations');
+    foreach ($t as $key=>$value)
+    {
+        $t[$key]=$value[$language];
+    }
+    ?>
+
+<div id="main">
+
+    <h1><?php echo e(ucfirst($t[$action])); ?></h1>
+    <table border="1" style="width:100%">
+	<thead>
+	<tr>
+        <th data-sort="int">Grant</th>
+        <th class="nomobile" data-sort="string"><?php echo e(ucfirst($t['objects'])); ?></th>
+        <th data-sort="string"><?php echo e(ucfirst($t['customer'])); ?></th>
+        <th data-sort="string"><?php echo e(ucfirst($t['user'])); ?></th>
+        <th class="nomobile" data-sort="string"><?php echo e(ucfirst($t['state'])); ?></th>
+        <th class="nomobile" data-sort="float"><?php echo e(ucfirst($t['purpose'])); ?></th>
+        <th data-sort="float"><?php echo e(ucfirst($t['updated'])); ?></th>
+        <th class="nomobile" data-sort="float"><?php echo e(ucfirst($t['reserved'])); ?></th>
+        <th class="nomobile" data-sort="float"><?php echo e(ucfirst($t['granted'])); ?></th>
+        <th class="nomobile" data-sort="float"><?php echo e(ucfirst($t['handed'])); ?></th>
+        <th class="nomobile" data-sort="float"><?php echo e(ucfirst($t['return_until'])); ?></th>
+	</tr>
+	</thead>
+	<tbody>
+        <?php foreach($lents as $lent): ?>
+            <tr>
+                <td><?php echo HTML::link($action.'/'.$lent['id']); ?></td>
+                <td class="nomobile">
+                    <?php foreach($lent['objects'] as $object): ?>
+                        <?php echo e($object['type']['name']); ?> (<?php echo e($object['name']); ?>),
+                    <?php endforeach; ?>
+                </td>
+                <td><?php echo e($lent['customer']['name']); ?></td>
+                <td><?php echo e($lent['user']['name']); ?></td>
+                <td class="nomobile"><?php echo e($lent['state']['name']); ?></td>
+                <td class="nomobile"><?php echo e($lent['purpose']); ?></td>
+                <td><?php echo e($lent['updated_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['reserved_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['granted_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['handed_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['return_at']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+	</tbody>
+    </table>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

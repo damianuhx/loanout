@@ -1,0 +1,44 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php
+    $t=config('app.translations');
+    foreach ($t as $key=>$value)
+    {
+        $t[$key]=$value[$language];
+    }
+    ?>
+
+<div id="meta">
+
+<h1>Admin</h1>
+
+</div>
+
+<div id="main">
+
+    <?php foreach($types as $type): ?>
+        <?php echo Form::label($type['name']); ?>
+
+
+        <?php echo e(ucfirst($t['how_many'])); ?>
+
+        <?php echo Form::text($type['id'], ''); ?>
+
+
+        <?php echo e(ucfirst($t['how_long'])); ?>
+
+        <?php echo Form::text($type['id'], ''); ?>
+
+    <?php endforeach; ?>
+
+<br /><br />
+
+    <?php echo Form::submit('OK'); ?>
+
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

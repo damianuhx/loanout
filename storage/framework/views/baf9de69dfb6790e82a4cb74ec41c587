@@ -1,0 +1,55 @@
+<style>
+    * {
+        font-size: 110%;
+        font-family: Arial;
+    }
+
+    h1 {
+        font-size: 200%;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin-top: 100px;
+        font-size: 160%;
+        text-decoration: underline;
+
+    }
+
+    h3 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        font-size: 160%;
+    }
+
+</style>
+
+<h1>Anleitung canon.loanout.net</h1>
+
+<h2>1. Anmelden</h2>
+<?php echo $__env->make('manual.1register', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<?php if($user='supervisor' || $user='all'): ?>
+    <?php echo $__env->make('manual.1activate', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php endif; ?>
+
+<h2>2. Ausleihen</h2>
+<?php echo $__env->make('manual.2select', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('manual.2loanoptions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('manual.2loaning', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<?php if($user='supervisor' || $user='all'): ?>
+    <?php echo $__env->make('manual.2block', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php endif; ?>
+
+<?php if($user='supervisor' || $user='admin' || $user='all'): ?>
+    <h2>3. Admin</h2>
+<?php endif; ?>
+
+<?php if($user='admin' || $user='all'): ?>
+    <?php echo $__env->make('manual.2repair', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php endif; ?>
+
+<?php if($user='supervisor' || $user='admin' || $user='all'): ?>
+    <?php echo $__env->make('manual.3admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php endif; ?>

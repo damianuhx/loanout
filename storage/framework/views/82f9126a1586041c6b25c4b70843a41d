@@ -1,0 +1,11 @@
+<?php $__env->startSection('content'); ?>
+
+    Ein Fehler ist aufgetreten: <br/>
+    <?php echo e($exception->getMessage()); ?>
+
+    <br/><br/>
+    <?php echo HTML::link(env('HREF_MAIN'), 'Hier gehts zur Startseite'); ?> <br/>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

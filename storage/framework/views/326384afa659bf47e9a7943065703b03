@@ -1,0 +1,68 @@
+<html>
+<head>
+<link href="<?php echo e(env('HREF_MAIN')); ?>style.css" type="text/css" rel="stylesheet">
+</head>
+<body class="fancy">
+
+<div id="overlay">
+
+	<div class="details">
+    <?php
+        $t=config('app.translations');
+        foreach ($t as $key=>$value)
+        {
+            $t[$key]=$value[$language];
+        }
+    ?>
+
+    <h2><?php echo e(ucfirst($t['objectdetails'])); ?></h2>
+
+    <?php echo e(ucfirst($t['name'])); ?>: <?php echo e($object['name']); ?> <br/>
+    <br/>
+    <?php echo e(ucfirst($t['available'])); ?>: <?php echo e($t[$object['available']]); ?>
+
+        <?php if(!$object['available']): ?>
+            (<?php echo e(ucfirst($t['return_date'])); ?>:<?php echo e($object['return_date']); ?> | <?php echo e($lender); ?>)
+        <?php endif; ?>
+        <br/>
+
+
+
+        <?php echo e(ucfirst($t['locked'])); ?>: <?php echo e($t[$locked]); ?>
+
+        <?php if($object['locked']): ?>
+              | <?php echo e($locker); ?>
+
+        <?php endif; ?>
+        <br/>
+    <?php echo e(ucfirst($t['working'])); ?>: <?php echo e($t[$object['working']]); ?><br/>
+    <?php echo e(ucfirst($t['complete'])); ?>: <?php echo e($t[$object['complete']]); ?><br/>
+    <br/>
+    <?php echo e(ucfirst($t['accessories'])); ?>:<br/>
+    <?php foreach($object['accessories'] as $accessory): ?>
+        <?php echo e($accessory['name_'.$language]); ?><br/>
+    <?php endforeach; ?>
+	</div>
+
+    <?php if($object['available'] || $object['locked']==$user['id']): ?>
+    <a href="<?php echo e(env('HREF_MAIN').'reserve/'.$object['id']); ?>" target="_parent" class="button"><?php echo e(ucfirst($t['add'])); ?></a>
+    <?php endif; ?>
+
+    <?php if($user['type']=='supervisor'): ?>
+        <br/>
+        <?php if($object['locked']==$user['id']): ?>
+            <a href="<?php echo e(env('HREF_MAIN')); ?>unlock/<?php echo e($object['id']); ?>" target="_parent" class="button" id="submitJS" name="submitJS" type="submit" value="<?php echo e($t['unlock']); ?>" onClick="return confirm('<?php echo e($t['are_you_sure']); ?>')"><?php echo e($t['unlock']); ?></a>
+        <?php elseif(!$object['locked']>0): ?>
+            <a href="<?php echo e(env('HREF_MAIN')); ?>lock/<?php echo e($object['id']); ?>" target="_parent" class="button" id="submitJS" name="submitJS" type="submit" value="<?php echo e($t['lock']); ?>" onClick="return confirm('<?php echo e($t['are_you_sure_lock']); ?>')"><?php echo e($t['lock']); ?></a>
+        <?php else: ?>
+            Das Objekt ist bereits blockiert von user_id <?php echo e($object['locked']); ?>
+
+        <?php endif; ?>
+    <?php endif; ?>
+
+
+
+</div>
+
+</body>
+</html>

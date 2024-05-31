@@ -1,0 +1,21 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php echo Form::open(['url'=>'grant/'.$lent['id'], 'method'=>'post']); ?>
+
+    <div>
+
+        <?php foreach($lent['objects'] as $object): ?>
+            <?php echo e($object['name']); ?> -- <?php echo e($object['type']['name']); ?> </br>
+        <?php endforeach; ?>
+
+            <input type="text" name="return_until" id="datepicker"> <br/>
+
+        <?php echo Form::submit('grant'); ?>
+
+    </div>
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

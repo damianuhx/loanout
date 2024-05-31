@@ -1,0 +1,24 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php foreach($list as $entry): ?>
+        <?php echo e($entry['name']); ?> <?php echo HTML::link('reservex/'.$entry['id'], 'remove'); ?> <br/>
+    <?php endforeach; ?>
+
+    <?php echo HTML::link('basketx/'.$entry['id'], 'clear'); ?>
+
+
+    <?php echo Form::open(array('url' => env('HREF_MAIN').'request', 'method' => 'post')); ?>
+
+    Date: <input type="text" name="return_until" id="datepicker"> <br/>
+    Comment: <?php echo Form::textarea('comment'); ?><br/>
+    Customer: <?php echo Form::select('customer_id', $customers); ?><br/>
+    Purpose: <?php echo Form::select('purpose_id', $purposes); ?><br/>
+    <?php echo Form::submit('RESERVE'); ?>
+
+    <?php echo Form::close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

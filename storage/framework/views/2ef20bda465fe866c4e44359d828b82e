@@ -1,0 +1,19 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main">
+
+<?php if($subcurrent!=='none'): ?>
+    <?php echo HTML::link(env('HREF_MAIN').$title.'/new', 'new', array('class' => 'button')); ?> <br/>
+
+    <?php foreach($list as $entry): ?>
+        <?php echo HTML::link(env('HREF_MAIN').$title.'/'.$entry['id'], $entry['name']); ?> <br/>
+    <?php endforeach; ?>
+
+<?php endif; ?>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

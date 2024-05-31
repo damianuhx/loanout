@@ -1,0 +1,153 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main" class="details">
+
+    <?php $t=config('app.translations');?>
+
+    <h2><?php echo e($purpose); ?></h2>
+    <?php echo Form::open(['url'=>$purpose.'/'.$lent['id'], 'method'=>'post']); ?>
+
+    <div class="subdetails">
+
+
+        <?php if($purpose=='confirmation'): ?>
+            <h2><?php echo e($lent['state']['name_'.$language]); ?></h2>
+        <?php endif; ?>
+
+        <h3><?php echo e($t['user'][$language]); ?></h3>
+        <?php echo e($lent['user']['name']); ?> <br/>
+        <?php echo e($lent['user']['email']); ?>
+
+
+
+
+        <h3><?php echo e($t['customer'][$language]); ?></h3>
+        <?php if($purpose == 'request'): ?>
+            <?php echo Form::select('customer_id', $customers); ?> <br/>
+        <?php else: ?>
+            <?php echo e($lent['customer']['name']); ?><br/>
+            <?php echo e($lent['customer']['company']); ?><br/>
+            <?php echo e($lent['customer']['title']); ?><br/>
+            <?php echo e($lent['customer']['first_name']); ?>
+
+            <?php echo e($lent['customer']['last_name']); ?><br/>
+            <?php echo e($lent['customer']['street']); ?>
+
+            <?php echo e($lent['customer']['number']); ?><br/>
+            <?php echo e($lent['customer']['zip']); ?>
+
+            <?php echo e($lent['customer']['city']); ?><br/>
+            <?php echo e($lent['customer']['country']); ?>
+
+        <?php endif; ?>
+
+            <h3><?php echo e($t['objects'][$language]); ?></h3>
+            <ul>
+                <?php foreach($lent['objects'] as $object): ?>
+                    <li><?php echo e($object['type']['name']); ?> (<?php echo e($object['name']); ?>)
+                        <?php if($purpose=='request' || $purpose=='grant'): ?>
+                            <?php echo HTML::link('reservex/'.$object['id'], 'remove'); ?> <br/>
+                        <?php elseif($purpose=='restock'): ?>
+                            returned:
+                            <?php echo Form::hidden('object_'.$object['id'], 0); ?>
+
+                            <?php echo Form::checkbox('object_'.$object['id'], 1);; ?>
+
+                            working:
+                            <?php echo Form::hidden('working_'.$object['id'], 0); ?>
+
+                            <?php echo Form::checkbox('working_'.$object['id'], 1);; ?>
+
+                            accessories:
+                            <?php foreach($object['accessories'] as $accessory): ?>
+                                <?php echo e($accessory['name']); ?>
+
+                                <?php echo Form::hidden('accessory_'.$object['id'].'_'.$accessory['id'], 0); ?>
+
+                                <?php echo Form::checkbox('accessory_'.$object['id'].'_'.$accessory['id'], 1);; ?>
+
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+
+
+        <h3><?php echo e($t['dates'][$language]); ?></h3>
+        <?php echo e($t['return_date'][$language]); ?>
+
+
+        <?php if($purpose=='request'): ?>
+            <input type="text" value="<?php echo e($lent['return_at']); ?>" name="return_at" id="datepicker"> <br/>
+        <?php else: ?>
+            <?php echo e($lent['purpose']); ?>
+
+        <?php endif; ?>
+
+
+            <h3><?php echo e($t['purpose'][$language]); ?></h3>
+            <?php if($purpose=='grant' || $purpose=='request'): ?>
+                <input type="text" name='purpose'" id="datepicker"> <br/>
+            <?php else: ?>
+                <?php echo e($lent['purpose']); ?>
+
+            <?php endif; ?>
+            <h3><?php echo e($t['shipping'][$language]); ?></h3>
+            <?php if($purpose=='grant' || $purpose=='request'): ?>
+                <?php echo Form::hidden('shipping', 0); ?>
+
+                <?php echo Form::checkbox('shipping', 1);; ?><br /><br />
+            <?php else: ?>
+                <?php echo e($lent['return_at']); ?>
+
+            <?php endif; ?>
+
+
+
+        <?php if($purpose=='restock'): ?>
+            <h3><?php echo e($t['handed'][$language]); ?></h3>
+            <?php echo e($lent['handed_at']); ?>
+
+        <?php endif; ?>
+
+        <?php if(false): ?>
+            <h3><?php echo e($t['restocked'][$language]); ?></h3>
+            <?php echo e($lent['stored_at']); ?>
+
+        <?php endif; ?>
+
+    </div>
+
+        <?php if($purpose!=='confirmation'): ?>
+            <?php echo Form::submit($purpose); ?>
+
+        <?php endif; ?>
+
+    <?php echo Form::close(); ?>
+
+
+    <?php if($purpose=='request'): ?>
+        <?php echo Form::open(['url'=>'', 'method'=>'get']); ?>
+
+        <?php echo Form::close(); ?>
+
+    <?php endif; ?>
+
+    <?php if($subcurrent=='granted'): ?>
+        <?php echo Form::open(['url'=>'print/'.$lent['id'], 'method'=>'get']); ?>
+
+        <?php echo Form::submit('print'); ?>
+
+        <?php echo Form::close(); ?>
+
+    <?php endif; ?>
+
+<div class="clear"></div>
+
+
+<?php $__env->stopSection(); ?>
+
+</div>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

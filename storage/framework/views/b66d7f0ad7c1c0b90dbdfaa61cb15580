@@ -1,0 +1,32 @@
+<html>
+<head>
+<link href="<?php echo e(env('HREF_MAIN')); ?>style.css" type="text/css" rel="stylesheet">
+</head>
+<body class="fancy">
+
+<div id="overlay">
+
+	<div class="details">
+	<h2>Objectdetails</h2>
+
+    Name: <?php echo e($object['name']); ?> <br/>
+
+    Available: <?php echo e($object['available']); ?> (return date: <?php echo e($object['return_date']); ?>) <br/>
+    Working: <?php echo e($object['working']); ?> <br/><br/>
+    Complete: <?php echo e($object['complete']); ?><br/>
+
+    Accessories:<br/>
+    <?php foreach($object['accessories'] as $accessory): ?>
+        <?php echo e($accessory['name']); ?><br/>
+    <?php endforeach; ?>
+	</div>
+
+
+    <?php if($object['available']): ?>
+    <a href="<?php echo e(env('HREF_MAIN').'reserve/'.$object['id']); ?>" target="_parent" class="button">ADD TO BASKET</a>
+    <?php endif; ?>
+
+</div>
+
+</body>
+</html>

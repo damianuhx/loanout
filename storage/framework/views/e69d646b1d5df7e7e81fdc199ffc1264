@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Canon loan-out</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="<?php echo e(env('HREF_MAIN')); ?>jquery-1.12.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="<?php echo e(env('HREF_MAIN')); ?>fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="<?php echo e(env('HREF_MAIN')); ?>fancybox/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="<?php echo e(env('HREF_MAIN')); ?>stupidtable.min.js"></script>
+
+    <link href="<?php echo e(env('HREF_MAIN')); ?>style.css" type="text/css" rel="stylesheet">
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var menu = $('#mnav')
+            $('#mmenu').click(function(event){
+                event.preventDefault();
+                if (menu.is(":visible"))
+                {
+                    menu.slideUp(100);
+                    $(this).removeClass("open");
+                }
+                else
+                {
+                    menu.slideDown(100);
+                    $(this).addClass("open");
+                }
+            });
+        $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+            $(".fancybox").fancybox({
+                maxWidth	: 800,
+                maxHeight	: 600,
+                fitToView	: false,
+                width		: '100%',
+                height		: '100%',
+                autoSize	: false,
+                closeClick	: false,
+                openEffect	: 'none',
+                closeEffect	: 'none'
+            });
+        $("table").stupidtable();
+        });
+    </script>
+
+</head>
+<body>
+
+<?php
+if (!isset($language)){
+    $language='de';
+}
+$t=config('app.translations');
+foreach ($t as $key=>$value)
+{
+    $t[$key]=$value[$language];
+}
+?>
+
+<div id="container">
+    <?php if(!isset($current)): ?>
+        <?php $current='none';?>
+    <?php endif; ?>
+    <div id="mheader" class="mobile">
+        <a id="mhome" href="<?php echo e(env('HREF_MAIN')); ?>"><img src="/canon_rot.png" alt="Canon" /></a>
+        <a id="mmenu" href="<?php echo e(env('HREF_MAIN')); ?>"><img src="/toggle.png" alt="Menu" /></a>
+        <h1>loan-out</h1>
+        <div id="mnav">
+            <a <?php if($current=='browser'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>"><?php echo e(ucfirst($t['browser'])); ?></a>
+            <a <?php if($current=='lending'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>grant/all"><?php echo e(ucfirst($t['lending'])); ?></a>
+            <a <?php if($current=='admin'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>admin"><?php echo e(ucfirst($t['options'])); ?></a>
+            <a href="<?php echo e(env('HREF_MAIN')); ?>auth/logout"><?php echo e(ucfirst($t['logout'])); ?></a>
+        </div>
+    </div>
+
+    <div id="header" class="desktop">
+        <a id="home" href="<?php echo e(env('HREF_MAIN')); ?>"><img src="<?php echo e(env('HREF_MAIN')); ?>canon_weiss.png" alt="Canon" /><h1>loan-out</h1></a>
+        <div id="nav">
+            <a <?php if($current=='browser'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>"><?php echo e(ucfirst($t['browser'])); ?></a>
+            <a <?php if($current=='lending'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>grant/all"><?php echo e(ucfirst($t['lending'])); ?></a>
+            <a <?php if($current=='admin'): ?> class="current" <?php endif; ?> href="<?php echo e(env('HREF_MAIN')); ?>admin"><?php echo e(ucfirst($t['options'])); ?></a>
+            <a href="<?php echo e(env('HREF_MAIN')); ?>auth/logout"><?php echo e(ucfirst($t['logout'])); ?></a>
+        </div>
+    </div>
+
+
+    <?php if(isset($subcurrent)): ?>
+    <?php if(in_array($subcurrent, ['divisions', 'categories', 'types', 'objects', 'basket', 'locked'])): ?>
+        <div id="meta">
+            <h1><?php echo e($t['browser']); ?></h1>
+            <div class="subnav">
+
+                <?php foreach($divisions as $area): ?>
+
+                <a href="<?php echo e(env('HREF_MAIN')); ?>categories/<?php echo e($area['id']); ?>"
+                <?php if($division['name'] == $area['name']): ?> class="current" <?php endif; ?>
+                ><?php echo e(ucfirst($area['name_'.$language])); ?></a>
+
+                    <?php //var_dump($division) ?>
+                <?php endforeach; ?>
+
+                <a href="<?php echo e(env('HREF_MAIN')); ?>basket"
+                <?php if($subcurrent=='basket'): ?> class="current" <?php endif; ?>
+                ><?php echo e(ucfirst($t['basket'])); ?></a>
+
+                <?php if($user_type=='supervisor'): ?>
+                <a href="<?php echo e(env('HREF_MAIN')); ?>lock"
+                <?php if($subcurrent=='locked'): ?> class="current" <?php endif; ?>
+                        ><?php echo e(ucfirst($t['locked'])); ?></a>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if(in_array($subcurrent, ['search', 'requested', 'granted', 'handed', 'restocked', 'returned', 'confirmation'])): ?>
+	
+<div id="meta">
+
+<h1>Ausleihe</h1>
+
+	<div class="subnav">
+
+        <a href="<?php echo e(env('HREF_MAIN')); ?>grant/all"
+        <?php if($subcurrent=='requested'): ?> class="current" <?php endif; ?>
+                ><?php echo e(ucfirst($t['grant'])); ?></a>
+
+        <a href="<?php echo e(env('HREF_MAIN')); ?>handout/all"
+        <?php if($subcurrent=='granted'): ?> class="current" <?php endif; ?>
+                ><?php echo e(ucfirst($t['hand'])); ?></a>
+
+        <a href="<?php echo e(env('HREF_MAIN')); ?>restock/all"
+        <?php if($subcurrent=='handed'): ?> class="current" <?php endif; ?>
+                ><?php echo e(ucfirst($t['restock'])); ?></a>
+
+	</div>
+
+</div>
+
+    <?php endif; ?>
+
+
+        <?php if(in_array($subcurrent, ['none', 'accessory', 'accessoryset', 'category', 'type', 'object', 'location', 'source', 'user', 'customer', 'division'])): ?>
+
+		<div id="meta">
+		
+			<h1><?php echo e($t['options']); ?></h1>
+
+			<div class="subnav">
+
+                <?php if($user_type=='supervisor'): ?>
+
+                    <a href="<?php echo e(env('HREF_MAIN')); ?>user/all"
+                    <?php if($subcurrent=='user'): ?> class="current" <?php endif; ?>
+                            >Users</a>
+
+
+            <a href="<?php echo e(env('HREF_MAIN')); ?>source/all"
+            <?php if($subcurrent=='source'): ?> class="current" <?php endif; ?>
+                    >Sources</a>
+
+                    <a href="<?php echo e(env('HREF_MAIN')); ?>division/all"
+                    <?php if($subcurrent=='division'): ?> class="current" <?php endif; ?>
+                            >Divisions</a>
+                <?php endif; ?>
+
+                    <?php if($user_type=='admin' || $user_type=='supervisor'): ?>
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>category/all"
+                        <?php if($subcurrent=='category'): ?> class="current" <?php endif; ?>
+                                >Categories</a>
+
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>type/all"
+                        <?php if($subcurrent=='type'): ?> class="current" <?php endif; ?>
+                                >Types</a>
+
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>object/all"
+                        <?php if($subcurrent=='object'): ?> class="current" <?php endif; ?>
+                                >Objects</a>
+
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>accessory/all"
+                        <?php if($subcurrent=='accessory'): ?> class="current" <?php endif; ?>
+                                >Accessories</a>
+
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>accessoryset/all"
+                        <?php if($subcurrent=='accessoryset'): ?> class="current" <?php endif; ?>
+                                >Accessorysets</a>
+
+                        <a href="<?php echo e(env('HREF_MAIN')); ?>location/all"
+                        <?php if($subcurrent=='location'): ?> class="current" <?php endif; ?>
+                                >Locations</a>
+
+                    <?php endif; ?>
+
+
+            <a href="<?php echo e(env('HREF_MAIN')); ?>customer/all"
+            <?php if($subcurrent=='customer'): ?> class="current" <?php endif; ?>
+                    >Customers</a>
+			</div>
+		</div>
+
+        <?php endif; ?>
+    <?php endif; ?>
+
+
+    <?php echo $__env->yieldContent('content'); ?>
+
+
+</div>
+
+</body>
+</html>

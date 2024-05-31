@@ -1,0 +1,280 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main" class="details">
+
+    <?php $t=config('app.translations');?>
+
+        <script>
+            $(function(){
+
+                // jQuery UI Dialog
+
+                $('#jq-dialog').dialog({
+                    autoOpen: false,
+                    width: 400,
+                    modal: true,
+                    resizable: false,
+                    buttons: {
+                        "Submit Form": function() {
+                            document.testconfirmJQ.submit();
+                        },
+                        "Cancel": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+                $('form#testconfirmJQ').submit(function(e){
+                    e.preventDefault();
+                    $("span#dialog-email strong").html($("input#emailJQ").val());
+                    $('#jq-dialog').dialog('open');
+                });
+            });
+        </script>
+
+
+    <h2><?php echo e(ucfirst($t[$purpose][$language])); ?></h2>
+        <?php if($purpose!=='request'): ?>
+            ID: <?php echo e($lent['id']); ?><br/><br/>
+        <?php endif; ?>
+
+
+
+        <?php echo Form::open(['url'=>$purpose.'/'.$lent['id'], 'method'=>'post', 'id'=>'testconfirmJS', 'name'=>'testconfirmJS']); ?>
+
+        <div class="subdetails">
+
+        <?php if($purpose=='confirmation'): ?>
+            <h2><?php echo e($lent['state']['name_'.$language]); ?></h2>
+        <?php endif; ?>
+
+
+            <h3><?php echo e($t['objects'][$language]); ?></h3>
+            <ul>
+                <?php foreach($lent['objects'] as $object): ?>
+                    <li><b><?php echo e($object['type']['name']); ?> (<?php echo e($object['name']); ?>)</b>
+
+                        <?php if($purpose=='request' || $purpose=='grant'): ?>
+                            <?php echo HTML::link('reservex/'.$object['id'], 'remove'); ?> <br/>
+                        <?php elseif($purpose=='handout'): ?>
+                            <?php echo e($object['location']['name']); ?>
+
+                        <?php elseif($purpose=='restock'): ?>
+                            <?php echo Form::hidden('object_'.$object['id'], 1); ?>
+
+                            </br>
+                            <?php echo Form::hidden('working_'.$object['id'], 0); ?>
+
+                            <?php echo Form::checkbox('working_'.$object['id'], 1);; ?>
+
+                            <em><?php echo e($t['working'][$language]); ?></em>
+                            </br><em>accessories:</em>
+                            <?php foreach($object['accessories'] as $accessory): ?>
+
+                                <?php if($accessory['included']): ?>
+                                    <p style="color:green">x
+                                <?php else: ?>
+                                    <p style="color:red">o
+                                <?php endif; ?>
+                                        <?php echo Form::hidden('accessory_'.$object['id'].'_'.$accessory['id'], 0); ?>
+
+                                        <?php echo Form::checkbox('accessory_'.$object['id'].'_'.$accessory['id'], 1);; ?>
+
+                                <?php echo e($accessory['name_'.$language]); ?>
+
+                                <?php if($accessory['required']==false): ?>
+                                    (<?php echo e($t['optional'][$language]); ?>)
+                                    <?php endif; ?>
+                                    </p>
+                            <?php endforeach; ?>
+                            <br/>
+                        <?php endif; ?>
+
+                    </li>
+                <?php endforeach; ?>
+                    <?php if($purpose=='request'): ?>
+                    <li>
+                    <a href="<?php echo e(env('HREF_MAIN')); ?>categories"><?php echo e($t['add_object'][$language]); ?></a>
+                    </li>
+                    <?php endif; ?>
+            </ul>
+
+
+            <h3><?php echo e($t['user'][$language]); ?></h3>
+        <?php echo e($lent['user']['name']); ?> <br/>
+        <?php echo e($lent['user']['email']); ?>
+
+
+
+
+        <h3><?php echo e($t['customer'][$language]); ?></h3>
+        <?php if($purpose == 'request'): ?>
+            <?php $customers[0]='new';?>
+            <?php echo Form::select('customer_id', $customers, null, ['id'=>'customer', 'title'=>'Bitte wählen Sie einen vordefinierten Reseller aus oder wählen Sie "new" um eine eigene Adresse einzugeben']); ?> <br/>
+            <div id="customer_form"></div>
+        <?php else: ?>
+            <?php echo e($lent['customer']['name']); ?><br/>
+            <?php echo e($lent['customer']['company']); ?><br/>
+            <?php echo e($lent['customer']['title']); ?><br/>
+            <?php echo e($lent['customer']['first_name']); ?>
+
+            <?php echo e($lent['customer']['last_name']); ?><br/>
+            <?php echo e($lent['customer']['street']); ?>
+
+            <?php echo e($lent['customer']['number']); ?><br/>
+            <?php echo e($lent['customer']['zip']); ?>
+
+            <?php echo e($lent['customer']['city']); ?><br/>
+            <?php echo e($lent['customer']['country']); ?><br/>
+            <?php echo e($lent['customer']['phone']); ?><br/>
+            <?php echo e($lent['customer']['email']); ?><br/>
+        <?php endif; ?>
+
+            <script>
+                function myFunction(){
+                    $('#customer_form').append('<input type="text"/>');
+                }
+
+                $('#customer').change(function(){
+                    var value = $(this).find('option:selected').attr('value');
+                    if (value==0)
+                    {
+                        var myNode = document.getElementById("customer_form");
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.firstChild);
+                        }
+                        $('#customer_form').append('<div><?php echo e(ucfirst($t['company'][$language])); ?>:</div>');
+                        $('#customer_form').append('<input name="company" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['title'][$language])); ?>:');
+                        $('#customer_form').append('<input name="title" type="text" />');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['first_name'][$language])); ?>:');
+                        $('#customer_form').append('<input name="first_name" type="text" required/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['last_name'][$language])); ?>:');
+                        $('#customer_form').append('<input name="last_name" type="text" required/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['addition'][$language])); ?>:');
+                        $('#customer_form').append('<input name="addition" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['street'][$language])); ?>:');
+                        $('#customer_form').append('<input name="street" type="text" required/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['number'][$language])); ?>:');
+                        $('#customer_form').append('<input name="number" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['zip'][$language])); ?>:');
+                        $('#customer_form').append('<input name="zip" type="text" required/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['city'][$language])); ?>:');
+                        $('#customer_form').append('<input name="city" type="text" required/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['country'][$language])); ?>:');
+                        $('#customer_form').append('<input name="country" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['phone'][$language])); ?>:');
+                        $('#customer_form').append('<input name="phone" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['email'][$language])); ?>:');
+                        $('#customer_form').append('<input name="email" type="text"/>');
+                        $('#customer_form').append('<?php echo e(ucfirst($t['language'][$language])); ?>:');
+                        $('#customer_form').append('<?php echo Form::select("language", ["de"=>$t["german"][$language], "fr"=>$t["french"][$language], "en"=>$t["english"][$language]]); ?>');
+                    }
+                    else if (value>0)
+                    {
+                        var myNode = document.getElementById("customer_form");
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.firstChild);
+                        }
+                    }
+                });
+            </script>
+
+
+        <h3><?php echo e($t['dates'][$language]); ?></h3>
+        <?php echo e($t['return_date'][$language]); ?><br/>
+
+        <?php if($purpose=='request' || $purpose=='grant'): ?>
+            <input type="date" value="<?php echo e($lent['return_at']); ?>" name="return_at" id="datepicker" required> <br/>
+        <?php else: ?>
+            <?php echo e($lent['return_at']); ?>
+
+        <?php endif; ?>
+
+
+
+        <h3><?php echo e($t['purpose'][$language]); ?></h3>
+
+        <?php if($purpose=='request'): ?>
+                <input type="text" name='purpose'"></input> <br/>
+        <?php else: ?>
+                <?php echo e($lent['purpose']); ?><br/>
+        <?php endif; ?>
+
+
+
+        <h3><?php echo e(ucfirst($t['shipping'][$language])); ?></h3>
+
+            <?php if($purpose=='request'): ?>
+
+                <?php echo Form::radio('shipping', '1'); ?>
+
+                <?php echo e($t['send'][$language]); ?>
+
+                <br/>
+                <?php echo Form::radio('shipping', '0', true); ?>
+
+                <?php echo e($t['pickup'][$language]); ?>
+
+            <?php else: ?>
+                <?php echo e($t[$lent['shipping']][$language]); ?>
+
+            <?php endif; ?>
+            <br/><br/>
+
+
+        <?php if($purpose=='restock'): ?>
+            <h3><?php echo e($t['handed'][$language]); ?></h3>
+            <?php echo e($lent['handed_at']); ?>
+
+        <?php endif; ?>
+
+        <?php if(false): ?>
+            <h3><?php echo e($t['restocked'][$language]); ?></h3>
+            <?php echo e($lent['stored_at']); ?>
+
+        <?php endif; ?>
+
+    </div>
+
+        <?php if($purpose!=='confirmation'): ?>
+            <input class="btn btn-primary" id="submitJS" name="submitJS" type="submit" value="<?php echo e($t[$purpose][$language]); ?>" onClick="return confirm('<?php echo e($t['are_you_sure'][$language]); ?>')" />
+        <?php endif; ?>
+
+    <br/>
+
+        <?php echo Form::close(); ?>
+
+
+        <?php if($purpose=='grant'): ?>
+            <br/>
+        <?php echo Form::open(['url'=>'reject/'.$lent['id'], 'method'=>'post']); ?>
+
+
+            <input class="btn btn-primary" id="submitJS" name="submitJS" type="submit" value="<?php echo e($t['reject'][$language]); ?>" onClick="return confirm('<?php echo e($t['are_you_sure'][$language]); ?>')" />
+
+        <?php echo Form::close(); ?>
+
+        <?php endif; ?>
+
+
+
+
+
+        <br/>
+    <?php if($purpose!=='request'): ?>
+        <?php echo Form::open(['url'=>'print/'.$lent['id'], 'method'=>'get']); ?>
+
+        <?php echo Form::submit('print'); ?>
+
+        <?php echo Form::close(); ?>
+
+    <?php endif; ?>
+
+<div class="clear"></div>
+
+
+<?php $__env->stopSection(); ?>
+
+</div>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

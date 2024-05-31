@@ -1,0 +1,119 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main" class="edit">
+
+    <h2><?php echo e($title); ?></h2>
+    <?php echo Form::open(['url'=>$link]); ?>
+
+
+    <?php foreach($fields as $field): ?>
+        <div class="form-group">
+            <?php echo Form::label($field['label']); ?>
+
+            <?php if($field['type']=='name'): ?>
+                <?php echo Form::text($field['name'], $field['content']); ?>
+
+            <?php elseif($field['type']=='text'): ?>
+                <?php echo Form::textarea($field['name'], $field['content']); ?>
+
+            <?php elseif($field['type']=='decimal'): ?>
+                <input type="number" name="<?php echo e($field['name']); ?>" step="0.01" value="<?php echo e($field['content']); ?>"/>
+            <?php elseif($field['type']=='number'): ?>
+                <?php echo Form::input('number', $field['name'], $field['content']); ?>
+
+            <?php elseif($field['type']=='date'): ?>
+                <?php echo Form::input('date', $field['name']); ?>
+
+            <?php elseif($field['type']=='hidden'): ?>
+                <?php echo e($field['content']); ?>
+
+            <?php elseif($field['type']=='check'): ?>
+                <?php echo Form::hidden($field['name'], 0); ?>
+
+                <?php echo Form::checkbox($field['name'], 1);; ?>
+
+            <?php elseif($field['type']=='timestamp'): ?>
+                <?php echo e($field['content']); ?>
+
+            <?php elseif($field['type']=='dropdown'): ?>
+                <?php echo Form::select($field['name'], $field['selection'], $field['content']); ?>
+
+            <?php elseif($field['type']=='tomany'): ?>
+            <?php else: ?>
+                <?php echo e($field['content']); ?>
+
+                <?php echo Form::hidden($field['name'], $field['content']); ?>
+
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    <br/>
+    <div class="form-group" >
+
+        <?php if($id=='new'): ?>
+            <?php echo Form::submit('create'); ?>
+
+        <?php else: ?>
+            <?php echo Form::submit('update'); ?>
+
+        <?php endif; ?>
+    </div>
+    <?php echo Form::close(); ?>
+
+
+    <?php if($id!=='new'): ?>
+
+		<?php echo Form::open(array('url' => $link, 'method' => 'delete')); ?>
+
+        <?php echo Form::submit('delete'); ?>
+
+        <?php echo Form::close(); ?>
+
+
+<div class="clear"></div>
+
+        <?php foreach($fields as $field): ?>
+            <?php if($field['type']=='tomany'): ?>
+
+<div class="tomany">
+                <h2><?php echo e($field['name']); ?></h2>
+
+				<div class="small-buttons">
+                <?php foreach($field['fentries'] as $fkey=>$fentry): ?>
+                    <?php echo e($fentry['name']); ?>
+
+                    <?php echo Form::open(array('url' => $link.'/'.$field['name'].'/'.$fentry['id'], 'method' => 'delete')); ?>
+
+                    <?php echo Form::submit('remove'); ?>
+
+                    <?php echo Form::close(); ?>
+
+                <?php endforeach; ?>
+
+                <?php echo Form::open(array('url' => $link.'/'.$field['name'], 'method' => 'post')); ?>
+
+                <?php echo Form::select('id', $field['selection']); ?>
+
+                <?php echo Form::submit('add'); ?>
+
+                <?php echo Form::close(); ?>
+
+				</div>
+
+				<div class="clear"></div>
+
+</div>
+
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
+<div class="clear"></div>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

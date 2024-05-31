@@ -1,0 +1,48 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main">
+
+    <h1><?php echo e($action); ?></h1>
+    <table border="1" style="width:100%">
+	<thead>
+	<tr>
+        <th data-sort="int">Grant</th>
+        <th class="nomobile" data-sort="string">Objects</th>
+        <th data-sort="string">Customer</th>
+        <th data-sort="string">User</th>
+        <th class="nomobile" data-sort="string">State</th>
+        <th data-sort="float">Updated</th>
+        <th class="nomobile" data-sort="float">Reserved</th>
+        <th class="nomobile" data-sort="float">Granted</th>
+        <th class="nomobile" data-sort="float">Handed</th>
+        <th class="nomobile" data-sort="float">Returned</th>
+        <th class="nomobile" data-sort="float">Due</th>
+	</tr>
+	</thead>
+	<tbody>
+        <?php foreach($lents as $lent): ?>
+            <tr>
+                <td><?php echo HTML::link($action.'/'.$lent['id']); ?></td>
+                <td class="nomobile">
+                    <?php foreach($lent['objects'] as $object): ?>
+                        <?php echo e($object['type']['name']); ?> (<?php echo e($object['name']); ?>),
+                    <?php endforeach; ?>
+                </td>
+                <td><?php echo e($lent['customer']['name']); ?></td>
+                <td><?php echo e($lent['user']['name']); ?></td>
+                <td class="nomobile"><?php echo e($lent['state']['name']); ?></td>
+                <td><?php echo e($lent['updated_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['reserved_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['granted_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['handed_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['returned_at']); ?></td>
+                <td class="nomobile"><?php echo e($lent['return_at']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+	</tbody>
+    </table>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

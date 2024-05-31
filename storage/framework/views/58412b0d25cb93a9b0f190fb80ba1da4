@@ -1,0 +1,10 @@
+<?php $__env->startSection('content'); ?>
+<br/>
+<br/>
+<b>Bitte warten Sie bis Ihr Account aktiviert wurde. <br/>
+<br/>
+Please wait until your account has been activated. <br/>
+</b>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('emptyframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

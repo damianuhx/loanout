@@ -1,0 +1,25 @@
+<?php $__env->startSection('content'); ?>
+
+<div id="main">
+
+    <?php foreach($list as $division): ?>
+        <br/><h2><?php echo HTML::link(env('HREF_MAIN').'division/'.$division['id'], $division['name']); ?> </h2>
+            <?php foreach($division['categories'] as $category): ?>
+            <br/><h3><?php echo HTML::link(env('HREF_MAIN').'category/'.$category['id'], $category['name']); ?> </h3>
+            <?php foreach($category['types'] as $type): ?>
+                        <?php echo HTML::link(env('HREF_MAIN').'type/'.$type['id'], $type['name']); ?> <br/>
+                  <?php foreach($type['objects'] as $object): ?>
+                            <em>....<?php echo HTML::link(env('HREF_MAIN').'object/'.$object['id'], $object['name']); ?></em> <br/>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <br/>
+    <?php endforeach; ?>
+
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

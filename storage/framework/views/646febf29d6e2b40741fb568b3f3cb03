@@ -1,0 +1,12 @@
+<?php $__env->startSection('content'); ?>
+
+    <h1><?php echo e($title); ?></h1>
+
+    <?php foreach($values as $key=>$value): ?>
+        <?php echo e($key); ?> -- <?php echo e($value); ?>
+
+    <?php endforeach; ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frame', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
