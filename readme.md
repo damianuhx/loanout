@@ -1,3 +1,5 @@
+An online install of this application can be tested <a href="https://loanout.uhx.ch">here</a>
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
