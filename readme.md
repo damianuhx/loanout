@@ -7,7 +7,7 @@ You can log in as:
 * all users have the password "loanout"
 
 The role defines what you can see and change.
-The pcosess is described (in German) under /manuals. You can access an online version [here](https://loanout.uhx.ch/manual).  
+The process is described (in German) under /manuals. You can access an online version [here](https://loanout.uhx.ch/manual).  
 
 I can help you to get the app up and running. Please contact me.
  
