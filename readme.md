@@ -1,5 +1,18 @@
 An online install of this application can be tested <a href="https://loanout.uhx.ch">here</a>
 
+You can log in as:
+*user: user@uhx.ch
+*supervisor: supervisor@uhx.ch
+*admin: admin@uhx.ch
+all users have the password "loanout"
+
+The role defines what you can see and change.
+The pcosess is described (in German) under /manuals. You can access an online version [here](https://loanout.uhx.ch/manual).  
+
+I can help you to get the app up and running. Please contact me.
+ 
+This app was created with the Laravel Framework.
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
