@@ -4,7 +4,7 @@ You can log in as:
 * user: user@uhx.ch
 * supervisor: supervisor@uhx.ch
 * admin: admin@uhx.ch
-all users have the password "loanout"
+* all users have the password "loanout"
 
 The role defines what you can see and change.
 The pcosess is described (in German) under /manuals. You can access an online version [here](https://loanout.uhx.ch/manual).  
