@@ -1,9 +1,9 @@
 An online install of this application can be tested <a href="https://loanout.uhx.ch">here</a>
 
 You can log in as:
-*user: user@uhx.ch
-*supervisor: supervisor@uhx.ch
-*admin: admin@uhx.ch
+* user: user@uhx.ch
+* supervisor: supervisor@uhx.ch
+* admin: admin@uhx.ch
 all users have the password "loanout"
 
 The role defines what you can see and change.
